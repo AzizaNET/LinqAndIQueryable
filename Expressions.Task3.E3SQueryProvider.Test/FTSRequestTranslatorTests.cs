@@ -14,8 +14,8 @@ namespace Expressions.Task3.E3SQueryProvider.Test
         public void TestBinaryBackOrder()
         {
             var translator = new ExpressionToFtsRequestTranslator();
-            Expression<Func<EmployeeEntity, bool>> expression
-                = employee => "EPRUIZHW006" == employee.Workstation;
+
+            Expression<Func<EmployeeEntity, bool>> expression = employee => "EPRUIZHW006" == employee.Workstation;
 
             string translated = translator.Translate(expression);
             Assert.Equal("Workstation:(EPRUIZHW006)", translated);
@@ -51,10 +51,11 @@ namespace Expressions.Task3.E3SQueryProvider.Test
         public void TestMethodEquals()
         {
             var translator = new ExpressionToFtsRequestTranslator();
-            Expression<Func<EmployeeEntity, bool>> expression
-                = employee => employee.Workstation.Equals("EPRUIZHW006");
+
+            Expression<Func<EmployeeEntity, bool>> expression = employee => employee.Workstation.Equals("EPRUIZHW006");
 
             string translated = translator.Translate(expression);
+
             Assert.Equal("Workstation:(EPRUIZHW006)", translated);
         }
 

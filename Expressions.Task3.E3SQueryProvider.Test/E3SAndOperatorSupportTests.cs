@@ -8,9 +8,11 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Expressions.Task3.E3SQueryProvider.Models.Entities;
+using Expressions.Task3.E3SQueryProvider.Models.Request;
 using Xunit;
 
 namespace Expressions.Task3.E3SQueryProvider.Test
@@ -25,6 +27,24 @@ namespace Expressions.Task3.E3SQueryProvider.Test
             var translator = new ExpressionToFtsRequestTranslator();
             Expression<Func<IQueryable<EmployeeEntity>, IQueryable<EmployeeEntity>>> expression
                 = query => query.Where(e => e.Workstation == "EPRUIZHW006" && e.Manager.StartsWith("John"));
+
+            // Define the expected FTSQueryRequest FtsQueryRequest
+            //var expectedRequest = new FtsQueryRequest
+            //{
+            //    Statements = new List<Statement>
+            //    {
+            //        new Statement {Query = "Workstation:(EPRUIZHW006)"},
+            //        new Statement {Query = "Manager:(John*)"}
+            //    } 
+            //};
+
+            //// Translate the expression and serialize the resulting FTSQueryRequest
+            //var generatedRequest = translator.Translate(expression);
+            //var serializedRequest = new FtsRequestGenerator(generatedRequest).GenerateRequestUrl(generatedRequest);
+            //    //(generatedRequest);
+
+            //// Compare the serialized request with the expected request
+            //Assert.Equal(expectedRequest, generatedRequest);
             /*
              * The expression above should be converted to the following FTSQueryRequest and then serialized inside FTSRequestGenerator:
              * "statements": [
@@ -33,8 +53,10 @@ namespace Expressions.Task3.E3SQueryProvider.Test
                 // Operator between queries is AND, in other words result set will fit to both statements above
               ],
              */
-
             // todo: create asserts for this test by yourself, because they will depend on your final implementation
+
+            var translated = translator.Translate(expression);
+            Assert.Equal("dfd", translated);
             throw new NotImplementedException("Please implement this test and the appropriate functionality");
         }
 
